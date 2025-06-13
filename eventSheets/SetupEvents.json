@@ -1,0 +1,64 @@
+{
+	"name": "SetupEvents",
+	"events": [
+		{
+			"eventType": "block",
+			"conditions": [
+				{
+					"id": "on-any-key-released",
+					"objectClass": "Keyboard",
+					"sid": 937530475268342
+				}
+			],
+			"actions": [
+				{
+					"callFunction": "registerPlayer",
+					"sid": 378561016167779,
+					"parameters": [
+						"(Keyboard.LastKeyCode)"
+					]
+				}
+			],
+			"sid": 544869294934548
+		},
+		{
+			"eventType": "block",
+			"conditions": [],
+			"actions": [],
+			"sid": 801612093958018
+		},
+		{
+			"functionName": "registerPlayer",
+			"functionDescription": "",
+			"functionCategory": "",
+			"functionReturnType": "none",
+			"functionCopyPicked": false,
+			"functionIsAsync": false,
+			"functionParameters": [
+				{
+					"name": "key",
+					"type": "number",
+					"initialValue": "0",
+					"comment": "",
+					"sid": 347310233357069
+				}
+			],
+			"eventType": "function-block",
+			"conditions": [],
+			"actions": [
+				{
+					"id": "push",
+					"objectClass": "Array",
+					"sid": 883748469799735,
+					"parameters": {
+						"where": "back",
+						"value": "key",
+						"axis": "x"
+					}
+				}
+			],
+			"sid": 874437961746799
+		}
+	],
+	"sid": 270587157235578
+}

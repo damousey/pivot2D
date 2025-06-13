@@ -1,0 +1,99 @@
+{
+	"name": "GameEvents",
+	"events": [
+		{
+			"eventType": "variable",
+			"name": "OrbitSpeed",
+			"type": "number",
+			"initialValue": "240",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 624923462946686
+		},
+		{
+			"eventType": "variable",
+			"name": "OrbitDirection",
+			"type": "number",
+			"initialValue": "1",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 259084589838518
+		},
+		{
+			"eventType": "block",
+			"conditions": [
+				{
+					"id": "is-boolean-instance-variable-set",
+					"objectClass": "End1",
+					"sid": 478385879020893,
+					"parameters": {
+						"instance-variable": "Orbiting"
+					}
+				}
+			],
+			"actions": [
+				{
+					"id": "set-position",
+					"objectClass": "End1",
+					"sid": 252262892400309,
+					"parameters": {
+						"x": "End2.X+cos(Self.OrbitAngle)*64",
+						"y": "End2.Y+sin(Self.OrbitAngle)*64"
+					}
+				},
+				{
+					"id": "set-instvar-value",
+					"objectClass": "End1",
+					"sid": 281990614065672,
+					"parameters": {
+						"instance-variable": "OrbitAngle",
+						"value": "(Self.OrbitAngle+OrbitSpeed*dt*OrbitDirection)%360"
+					}
+				}
+			],
+			"sid": 488412185102994
+		},
+		{
+			"eventType": "block",
+			"conditions": [
+				{
+					"id": "else",
+					"objectClass": "System",
+					"sid": 560593919955393
+				},
+				{
+					"id": "is-boolean-instance-variable-set",
+					"objectClass": "End2",
+					"sid": 498266905192218,
+					"parameters": {
+						"instance-variable": "Orbiting"
+					}
+				}
+			],
+			"actions": [
+				{
+					"id": "set-position",
+					"objectClass": "End2",
+					"sid": 975517208531689,
+					"parameters": {
+						"x": "End1.X+cos(Self.OrbitAngle)*64",
+						"y": "End1.Y+sin(Self.OrbitAngle)*64"
+					}
+				},
+				{
+					"id": "set-instvar-value",
+					"objectClass": "End2",
+					"sid": 526793319470233,
+					"parameters": {
+						"instance-variable": "OrbitAngle",
+						"value": "(Self.OrbitAngle+OrbitSpeed*dt*OrbitDirection)%360"
+					}
+				}
+			],
+			"sid": 241906436455598
+		}
+	],
+	"sid": 208503246805035
+}

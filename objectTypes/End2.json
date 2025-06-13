@@ -1,0 +1,55 @@
+{
+	"name": "End2",
+	"plugin-id": "Sprite",
+	"sid": 540916981467671,
+	"isGlobal": false,
+	"editorNewInstanceIsReplica": true,
+	"instanceVariables": [
+		{
+			"name": "Orbiting",
+			"type": "boolean",
+			"desc": "",
+			"show": true,
+			"sid": 974576753964156
+		},
+		{
+			"name": "OrbitAngle",
+			"type": "number",
+			"desc": "",
+			"show": true,
+			"sid": 659038988448182
+		}
+	],
+	"behaviorTypes": [],
+	"effectTypes": [],
+	"animations": {
+		"items": [
+			{
+				"frames": [
+					{
+						"width": 233,
+						"height": 233,
+						"originX": 0.4978540772532189,
+						"originY": 0.5364806866952789,
+						"originalSource": "",
+						"exportFormat": "lossless",
+						"exportQuality": 0.8,
+						"fileType": "image/png",
+						"imageSpriteId": 1825577,
+						"useCollisionPoly": true,
+						"duration": 1,
+						"tag": ""
+					}
+				],
+				"sid": 523588786913742,
+				"name": "Animation 1",
+				"isLooping": false,
+				"isPingPong": false,
+				"repeatCount": 1,
+				"repeatTo": 0,
+				"speed": 5
+			}
+		],
+		"subfolders": []
+	}
+}
