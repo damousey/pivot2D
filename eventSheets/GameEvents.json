@@ -22,6 +22,16 @@
 			"sid": 259084589838518
 		},
 		{
+			"eventType": "variable",
+			"name": "GameCameraActive",
+			"type": "boolean",
+			"initialValue": "false",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 383428243283214
+		},
+		{
 			"eventType": "block",
 			"conditions": [
 				{
@@ -49,11 +59,11 @@
 						{
 							"id": "for",
 							"objectClass": "System",
-							"sid": 630132212259019,
+							"sid": 644086485064671,
 							"parameters": {
 								"name": "\"i\"",
 								"start-index": "0",
-								"end-index": "Array.Depth"
+								"end-index": "Array.Width-1"
 							}
 						}
 					],
@@ -74,10 +84,10 @@
 						{
 							"id": "set-instvar-value",
 							"objectClass": "PlayerControl",
-							"sid": 291402281683313,
+							"sid": 595522446813944,
 							"parameters": {
 								"instance-variable": "PlayerID",
-								"value": "loopindex+1"
+								"value": "loopindex"
 							}
 						},
 						{
@@ -103,6 +113,20 @@
 						{
 							"callFunction": "AssignPlayerValues",
 							"sid": 328255201849429
+						},
+						{
+							"id": "wait-for-previous-actions",
+							"objectClass": "System",
+							"sid": 819597924669017
+						},
+						{
+							"id": "set-boolean-eventvar",
+							"objectClass": "System",
+							"sid": 579648846532352,
+							"parameters": {
+								"variable": "GameCameraActive",
+								"value": "true"
+							}
 						}
 					],
 					"sid": 577485426332355
@@ -143,10 +167,10 @@
 						{
 							"id": "set-instvar-value",
 							"objectClass": "PlayerControl",
-							"sid": 877355587080972,
+							"sid": 994740623674577,
 							"parameters": {
 								"instance-variable": "KeyCode",
-								"value": "Array.At(Self.PlayerID-1)"
+								"value": "Array.At(Self.PlayerID)"
 							}
 						},
 						{
@@ -250,9 +274,242 @@
 						}
 					],
 					"sid": 609024221232116
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "for-each",
+							"objectClass": "System",
+							"sid": 939449099732889,
+							"parameters": {
+								"object": "PlayerControl"
+							}
+						}
+					],
+					"actions": [],
+					"sid": 727022124060098,
+					"children": [
+						{
+							"eventType": "block",
+							"conditions": [
+								{
+									"id": "on-key-code-released",
+									"objectClass": "Keyboard",
+									"sid": 227130735233909,
+									"parameters": {
+										"keycode": "PlayerControl.KeyCode"
+									}
+								}
+							],
+							"actions": [],
+							"sid": 877604210031737
+						}
+					]
 				}
 			],
 			"sid": 378745857815759
+		},
+		{
+			"eventType": "group",
+			"disabled": false,
+			"title": "Game Camera Control",
+			"description": "",
+			"isActiveOnStart": true,
+			"children": [
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "compare-boolean-eventvar",
+							"objectClass": "System",
+							"sid": 142672863768121,
+							"parameters": {
+								"variable": "GameCameraActive"
+							}
+						}
+					],
+					"actions": [],
+					"sid": 353342546382355,
+					"children": [
+						{
+							"eventType": "block",
+							"conditions": [
+								{
+									"id": "every-tick",
+									"objectClass": "System",
+									"sid": 282645657923176
+								}
+							],
+							"actions": [],
+							"sid": 933413219846441,
+							"children": [
+								{
+									"eventType": "variable",
+									"name": "Padding",
+									"type": "number",
+									"initialValue": "0",
+									"comment": "",
+									"isStatic": false,
+									"isConstant": false,
+									"sid": 668743297905759
+								},
+								{
+									"eventType": "variable",
+									"name": "minX",
+									"type": "number",
+									"initialValue": "99999",
+									"comment": "",
+									"isStatic": false,
+									"isConstant": false,
+									"sid": 683882965854801
+								},
+								{
+									"eventType": "variable",
+									"name": "maxX",
+									"type": "number",
+									"initialValue": "0",
+									"comment": "",
+									"isStatic": false,
+									"isConstant": false,
+									"sid": 944043123428256
+								},
+								{
+									"eventType": "variable",
+									"name": "minY",
+									"type": "number",
+									"initialValue": "99999",
+									"comment": "",
+									"isStatic": false,
+									"isConstant": false,
+									"sid": 307592165121770
+								},
+								{
+									"eventType": "variable",
+									"name": "maxY",
+									"type": "number",
+									"initialValue": "0",
+									"comment": "",
+									"isStatic": false,
+									"isConstant": false,
+									"sid": 483332811240009
+								},
+								{
+									"eventType": "variable",
+									"name": "targetScale",
+									"type": "number",
+									"initialValue": "0",
+									"comment": "",
+									"isStatic": false,
+									"isConstant": false,
+									"sid": 189858877468908
+								},
+								{
+									"eventType": "block",
+									"conditions": [
+										{
+											"id": "for-each",
+											"objectClass": "System",
+											"sid": 197534961416783,
+											"parameters": {
+												"object": "PlayerControl"
+											}
+										}
+									],
+									"actions": [
+										{
+											"id": "set-eventvar-value",
+											"objectClass": "System",
+											"sid": 924470019114606,
+											"parameters": {
+												"variable": "minX",
+												"value": "max(min(minX,PlayerRegistered.BBoxLeft-Padding/LayoutScale),0)"
+											}
+										},
+										{
+											"id": "set-eventvar-value",
+											"objectClass": "System",
+											"sid": 383939699992250,
+											"parameters": {
+												"variable": "minY",
+												"value": "max(min(minY,PlayerRegistered.BBoxTop-Padding/LayoutScale),0)"
+											}
+										},
+										{
+											"id": "set-eventvar-value",
+											"objectClass": "System",
+											"sid": 572114663171686,
+											"parameters": {
+												"variable": "maxX",
+												"value": "min(max(maxX,PlayerRegistered.BBoxRight+Padding/LayoutScale),LayoutWidth)"
+											}
+										},
+										{
+											"id": "set-eventvar-value",
+											"objectClass": "System",
+											"sid": 736358482306353,
+											"parameters": {
+												"variable": "maxY",
+												"value": "min(max(maxY,PlayerRegistered.BBoxBottom+Padding/LayoutScale),LayoutHeight)"
+											}
+										}
+									],
+									"sid": 273771761124241
+								},
+								{
+									"eventType": "block",
+									"conditions": [],
+									"actions": [
+										{
+											"id": "scroll-to-position",
+											"objectClass": "System",
+											"sid": 148386020719679,
+											"parameters": {
+												"x": "lerp(scrollx,(minX+maxX)/2,dt*16)",
+												"y": "lerp(scrolly,(minY+maxY)/2,dt*16)"
+											}
+										},
+										{
+											"id": "set-eventvar-value",
+											"objectClass": "System",
+											"sid": 545368782927676,
+											"parameters": {
+												"variable": "targetScale",
+												"value": "min(ViewportWidth(\"HUD\")/(maxX-minX), ViewportHeight(\"HUD\")/(maxY-minY))"
+											}
+										},
+										{
+											"id": "set-eventvar-value",
+											"objectClass": "System",
+											"sid": 783576155706161,
+											"parameters": {
+												"variable": "targetScale",
+												"value": "min(1, targetScale)"
+											}
+										},
+										{
+											"id": "set-layout-scale",
+											"objectClass": "System",
+											"sid": 617196805470371,
+											"parameters": {
+												"scale": "lerp(LayoutScale, targetScale, dt*16)"
+											}
+										}
+									],
+									"sid": 614039943235296
+								}
+							]
+						},
+						{
+							"eventType": "block",
+							"conditions": [],
+							"actions": [],
+							"sid": 368390598887279
+						}
+					]
+				}
+			],
+			"sid": 213276267466422
 		}
 	],
 	"sid": 208503246805035

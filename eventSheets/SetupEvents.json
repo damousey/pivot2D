@@ -121,12 +121,12 @@
 						{
 							"id": "create-object",
 							"objectClass": "System",
-							"sid": 969759417083987,
+							"sid": 377637816565366,
 							"parameters": {
 								"object-to-create": "PlayerRegistered",
 								"layer": "0",
-								"x": "0",
-								"y": "0",
+								"x": "int(LayoutWidth/2)",
+								"y": "int(LayoutHeight/2)",
 								"create-hierarchy": false,
 								"template-name": "\"\""
 							}
@@ -176,18 +176,28 @@
 				{
 					"id": "set-instvar-value",
 					"objectClass": "PlayerRegistered",
-					"sid": 559824346911228,
+					"sid": 452544304363172,
 					"parameters": {
 						"instance-variable": "PlayerID",
-						"value": "Array.IndexOf(Self.KeyCode)+1"
+						"value": "Array.IndexOf(Self.KeyCode)"
 					}
 				},
 				{
 					"id": "set-position",
 					"objectClass": "PlayerRegistered",
-					"sid": 652838923073880,
+					"sid": 650413825883214,
+					"disabled": true,
 					"parameters": {
-						"x": "250*Self.PlayerID",
+						"x": "(LayoutWidth/2)-(Self.Width*(Self.PlayerID%2))+(Self.PlayerID*Self.Width)",
+						"y": "250"
+					}
+				},
+				{
+					"id": "set-position",
+					"objectClass": "PlayerRegistered",
+					"sid": 162663410804683,
+					"parameters": {
+						"x": "(LayoutWidth/2)-(((-1)^(Self.PlayerID+1)) * ceil(Self.PlayerID / 2)*Self.Width)",
 						"y": "250"
 					}
 				}
@@ -473,13 +483,202 @@
 			"eventType": "block",
 			"conditions": [],
 			"actions": [],
-			"sid": 946970930973918
+			"sid": 729229728709767
 		},
 		{
-			"eventType": "block",
-			"conditions": [],
-			"actions": [],
-			"sid": 729229728709767
+			"eventType": "group",
+			"disabled": false,
+			"title": "Setup Camera Control",
+			"description": "",
+			"isActiveOnStart": true,
+			"children": [
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "compare-boolean-eventvar",
+							"objectClass": "System",
+							"sid": 501885182979681,
+							"parameters": {
+								"variable": "WaitingforReady"
+							}
+						}
+					],
+					"actions": [],
+					"sid": 487979254737178,
+					"children": [
+						{
+							"eventType": "block",
+							"conditions": [
+								{
+									"id": "every-tick",
+									"objectClass": "System",
+									"sid": 142272933333873
+								}
+							],
+							"actions": [],
+							"sid": 839230558506073,
+							"children": [
+								{
+									"eventType": "variable",
+									"name": "Padding",
+									"type": "number",
+									"initialValue": "300",
+									"comment": "",
+									"isStatic": false,
+									"isConstant": false,
+									"sid": 726611164547567
+								},
+								{
+									"eventType": "variable",
+									"name": "minX",
+									"type": "number",
+									"initialValue": "99999",
+									"comment": "",
+									"isStatic": false,
+									"isConstant": false,
+									"sid": 844728713255070
+								},
+								{
+									"eventType": "variable",
+									"name": "maxX",
+									"type": "number",
+									"initialValue": "0",
+									"comment": "",
+									"isStatic": false,
+									"isConstant": false,
+									"sid": 570404311265680
+								},
+								{
+									"eventType": "variable",
+									"name": "minY",
+									"type": "number",
+									"initialValue": "99999",
+									"comment": "",
+									"isStatic": false,
+									"isConstant": false,
+									"sid": 419656776504912
+								},
+								{
+									"eventType": "variable",
+									"name": "maxY",
+									"type": "number",
+									"initialValue": "0",
+									"comment": "",
+									"isStatic": false,
+									"isConstant": false,
+									"sid": 173168533667463
+								},
+								{
+									"eventType": "variable",
+									"name": "targetScale",
+									"type": "number",
+									"initialValue": "0",
+									"comment": "",
+									"isStatic": false,
+									"isConstant": false,
+									"sid": 698127183159135
+								},
+								{
+									"eventType": "block",
+									"conditions": [
+										{
+											"id": "for-each",
+											"objectClass": "System",
+											"sid": 582280904730811,
+											"parameters": {
+												"object": "PlayerRegistered"
+											}
+										}
+									],
+									"actions": [
+										{
+											"id": "set-eventvar-value",
+											"objectClass": "System",
+											"sid": 109010875373474,
+											"parameters": {
+												"variable": "minX",
+												"value": "min(min(minX,(PlayerRegistered.BBoxLeft-Padding)/LayoutScale),0)"
+											}
+										},
+										{
+											"id": "set-eventvar-value",
+											"objectClass": "System",
+											"sid": 806000427323689,
+											"parameters": {
+												"variable": "minY",
+												"value": "min(min(minY,(PlayerRegistered.BBoxTop-Padding)/LayoutScale),0)"
+											}
+										},
+										{
+											"id": "set-eventvar-value",
+											"objectClass": "System",
+											"sid": 448763379829937,
+											"parameters": {
+												"variable": "maxX",
+												"value": "min(max(maxX,PlayerRegistered.BBoxRight+Padding/LayoutScale),LayoutWidth)"
+											}
+										},
+										{
+											"id": "set-eventvar-value",
+											"objectClass": "System",
+											"sid": 664699150062629,
+											"parameters": {
+												"variable": "maxY",
+												"value": "min(max(maxY,PlayerRegistered.BBoxBottom+Padding/LayoutScale),LayoutHeight)"
+											}
+										}
+									],
+									"sid": 506496412818730
+								},
+								{
+									"eventType": "block",
+									"conditions": [],
+									"actions": [
+										{
+											"id": "scroll-to-position",
+											"objectClass": "System",
+											"sid": 549424761768003,
+											"parameters": {
+												"x": "lerp(scrollx,(minX+maxX)/2,dt*16)",
+												"y": "lerp(scrolly,(minY+maxY)/2,dt*16)"
+											}
+										},
+										{
+											"id": "set-eventvar-value",
+											"objectClass": "System",
+											"sid": 889601759746335,
+											"parameters": {
+												"variable": "targetScale",
+												"value": "min(ViewportWidth(0)/(maxX-minX), ViewportHeight(0)/(maxY-minY))"
+											}
+										},
+										{
+											"id": "set-eventvar-value",
+											"objectClass": "System",
+											"sid": 970961565363696,
+											"parameters": {
+												"variable": "targetScale",
+												"value": "min(1, targetScale)"
+											}
+										},
+										{
+											"id": "set-layout-scale",
+											"objectClass": "System",
+											"sid": 406446910871157,
+											"parameters": {
+												"scale": "lerp(LayoutScale, targetScale, dt*16)"
+											}
+										}
+									],
+									"sid": 771328440670268
+								}
+							]
+						}
+					]
+				}
+			],
+			"sid": 716553544389334
 		}
 	],
 	"sid": 270587157235578
