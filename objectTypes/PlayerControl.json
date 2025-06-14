@@ -1,0 +1,94 @@
+{
+	"name": "PlayerControl",
+	"plugin-id": "Sprite",
+	"sid": 152117120150972,
+	"isGlobal": false,
+	"editorNewInstanceIsReplica": true,
+	"instanceVariables": [
+		{
+			"name": "KeyCode",
+			"type": "number",
+			"desc": "",
+			"show": true,
+			"sid": 182670898650414
+		},
+		{
+			"name": "PlayerID",
+			"type": "number",
+			"desc": "",
+			"show": true,
+			"sid": 767909982196758
+		},
+		{
+			"name": "OrbitSpeed",
+			"type": "number",
+			"desc": "",
+			"show": true,
+			"sid": 535555514649942
+		},
+		{
+			"name": "OrbitDirection",
+			"type": "number",
+			"desc": "",
+			"show": true,
+			"sid": 842449892936275
+		}
+	],
+	"behaviorTypes": [],
+	"effectTypes": [],
+	"animations": {
+		"items": [
+			{
+				"frames": [
+					{
+						"width": 231,
+						"height": 231,
+						"originX": 0.48917748917748916,
+						"originY": 0.5021645021645021,
+						"originalSource": "",
+						"exportFormat": "lossless",
+						"exportQuality": 0.8,
+						"fileType": "image/png",
+						"imageSpriteId": 8612091,
+						"useCollisionPoly": true,
+						"duration": 1,
+						"tag": ""
+					}
+				],
+				"sid": 525312334743724,
+				"name": "Unready",
+				"isLooping": false,
+				"isPingPong": false,
+				"repeatCount": 1,
+				"repeatTo": 0,
+				"speed": 5
+			},
+			{
+				"frames": [
+					{
+						"width": 231,
+						"height": 231,
+						"originX": 0.48917748917748916,
+						"originY": 0.5021645021645021,
+						"originalSource": "",
+						"exportFormat": "lossless",
+						"exportQuality": 0.8,
+						"fileType": "image/png",
+						"imageSpriteId": 7780373,
+						"useCollisionPoly": true,
+						"duration": 1,
+						"tag": ""
+					}
+				],
+				"sid": 756873649158488,
+				"name": "Ready",
+				"isLooping": false,
+				"isPingPong": false,
+				"repeatCount": 1,
+				"repeatTo": 0,
+				"speed": 5
+			}
+		],
+		"subfolders": []
+	}
+}

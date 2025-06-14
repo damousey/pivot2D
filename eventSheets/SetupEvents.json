@@ -2,6 +2,58 @@
 	"name": "SetupEvents",
 	"events": [
 		{
+			"eventType": "variable",
+			"name": "PlayersReady",
+			"type": "number",
+			"initialValue": "0",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 853053462029490
+		},
+		{
+			"eventType": "variable",
+			"name": "PlayersRegistered",
+			"type": "number",
+			"initialValue": "0",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 534025954434497
+		},
+		{
+			"eventType": "variable",
+			"name": "WaitingforReady",
+			"type": "boolean",
+			"initialValue": "false",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 390765495879505
+		},
+		{
+			"eventType": "block",
+			"conditions": [
+				{
+					"id": "on-start-of-layout",
+					"objectClass": "System",
+					"sid": 611254521407175
+				}
+			],
+			"actions": [
+				{
+					"id": "set-boolean-eventvar",
+					"objectClass": "System",
+					"sid": 953563763638779,
+					"parameters": {
+						"variable": "WaitingforReady",
+						"value": "false"
+					}
+				}
+			],
+			"sid": 792408147599911
+		},
+		{
 			"eventType": "block",
 			"conditions": [
 				{
@@ -13,19 +65,13 @@
 			"actions": [
 				{
 					"callFunction": "registerPlayer",
-					"sid": 378561016167779,
+					"sid": 940834174509516,
 					"parameters": [
 						"(Keyboard.LastKeyCode)"
 					]
 				}
 			],
 			"sid": 544869294934548
-		},
-		{
-			"eventType": "block",
-			"conditions": [],
-			"actions": [],
-			"sid": 801612093958018
 		},
 		{
 			"functionName": "registerPlayer",
@@ -45,19 +91,395 @@
 			],
 			"eventType": "function-block",
 			"conditions": [],
+			"actions": [],
+			"sid": 874437961746799,
+			"children": [
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "contains-value",
+							"objectClass": "Array",
+							"sid": 346418908671944,
+							"parameters": {
+								"value": "key"
+							},
+							"isInverted": true
+						}
+					],
+					"actions": [
+						{
+							"id": "push",
+							"objectClass": "Array",
+							"sid": 458134714932184,
+							"parameters": {
+								"where": "back",
+								"value": "key",
+								"axis": "x"
+							}
+						},
+						{
+							"id": "create-object",
+							"objectClass": "System",
+							"sid": 969759417083987,
+							"parameters": {
+								"object-to-create": "PlayerRegistered",
+								"layer": "0",
+								"x": "0",
+								"y": "0",
+								"create-hierarchy": false,
+								"template-name": "\"\""
+							}
+						},
+						{
+							"id": "add-to-eventvar",
+							"objectClass": "System",
+							"sid": 808977152432923,
+							"parameters": {
+								"variable": "PlayersRegistered",
+								"value": "1"
+							}
+						},
+						{
+							"id": "set-boolean-eventvar",
+							"objectClass": "System",
+							"sid": 612089024886851,
+							"parameters": {
+								"variable": "WaitingforReady",
+								"value": "true"
+							}
+						}
+					],
+					"sid": 807600546780393
+				}
+			]
+		},
+		{
+			"eventType": "block",
+			"conditions": [
+				{
+					"id": "on-created",
+					"objectClass": "PlayerRegistered",
+					"sid": 755450314449082
+				}
+			],
 			"actions": [
 				{
-					"id": "push",
-					"objectClass": "Array",
-					"sid": 883748469799735,
+					"id": "set-instvar-value",
+					"objectClass": "PlayerRegistered",
+					"sid": 245122420058452,
 					"parameters": {
-						"where": "back",
-						"value": "key",
-						"axis": "x"
+						"instance-variable": "KeyCode",
+						"value": "Keyboard.LastKeyCode"
+					}
+				},
+				{
+					"id": "set-instvar-value",
+					"objectClass": "PlayerRegistered",
+					"sid": 559824346911228,
+					"parameters": {
+						"instance-variable": "PlayerID",
+						"value": "Array.IndexOf(Self.KeyCode)+1"
+					}
+				},
+				{
+					"id": "set-position",
+					"objectClass": "PlayerRegistered",
+					"sid": 652838923073880,
+					"parameters": {
+						"x": "250*Self.PlayerID",
+						"y": "250"
 					}
 				}
 			],
-			"sid": 874437961746799
+			"sid": 411441501260660
+		},
+		{
+			"eventType": "block",
+			"conditions": [
+				{
+					"id": "for-each",
+					"objectClass": "System",
+					"sid": 491808900362692,
+					"parameters": {
+						"object": "PlayerRegistered"
+					}
+				}
+			],
+			"actions": [],
+			"sid": 916654377629934,
+			"children": [
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "key-code-is-down",
+							"objectClass": "Keyboard",
+							"sid": 745769361702751,
+							"parameters": {
+								"keycode": "PlayerRegistered.KeyCode"
+							}
+						},
+						{
+							"id": "compare-instance-variable",
+							"objectClass": "PlayerRegistered",
+							"sid": 777859821027899,
+							"parameters": {
+								"instance-variable": "ReadyCount",
+								"comparison": 2,
+								"value": "100"
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "rotate-clockwise",
+							"objectClass": "PlayerRegistered",
+							"sid": 740281467190864,
+							"parameters": {
+								"degrees": "360/100"
+							}
+						},
+						{
+							"id": "add-to-instvar",
+							"objectClass": "PlayerRegistered",
+							"sid": 640920178920008,
+							"parameters": {
+								"instance-variable": "ReadyCount",
+								"value": "1"
+							}
+						}
+					],
+					"sid": 245038637955587
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "else",
+							"objectClass": "System",
+							"sid": 203061990788865
+						},
+						{
+							"id": "key-code-is-down",
+							"objectClass": "Keyboard",
+							"sid": 945314333078080,
+							"parameters": {
+								"keycode": "PlayerRegistered.KeyCode"
+							},
+							"isInverted": true
+						},
+						{
+							"id": "compare-instance-variable",
+							"objectClass": "PlayerRegistered",
+							"sid": 120111893721893,
+							"parameters": {
+								"instance-variable": "ReadyCount",
+								"comparison": 4,
+								"value": "0"
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "rotate-counter-clockwise",
+							"objectClass": "PlayerRegistered",
+							"sid": 985681832837982,
+							"parameters": {
+								"degrees": "(360/100)/2"
+							}
+						},
+						{
+							"id": "subtract-from-instvar",
+							"objectClass": "PlayerRegistered",
+							"sid": 944979501844901,
+							"parameters": {
+								"instance-variable": "ReadyCount",
+								"value": "0.5"
+							}
+						}
+					],
+					"sid": 640763253930970
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "compare-instance-variable",
+							"objectClass": "PlayerRegistered",
+							"sid": 980656270838395,
+							"parameters": {
+								"instance-variable": "ReadyCount",
+								"comparison": 5,
+								"value": "100"
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "set-animation",
+							"objectClass": "PlayerRegistered",
+							"sid": 902684526926541,
+							"parameters": {
+								"animation": "\"Ready\"",
+								"from": "current-frame"
+							}
+						},
+						{
+							"id": "set-boolean-instvar",
+							"objectClass": "PlayerRegistered",
+							"sid": 135375990630089,
+							"parameters": {
+								"instance-variable": "Ready",
+								"value": "true"
+							}
+						},
+						{
+							"callFunction": "EvaluateReadiness",
+							"sid": 401840452422181
+						}
+					],
+					"sid": 172022174112396
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "else",
+							"objectClass": "System",
+							"sid": 663300832741769
+						},
+						{
+							"id": "compare-instance-variable",
+							"objectClass": "PlayerRegistered",
+							"sid": 703356381078996,
+							"parameters": {
+								"instance-variable": "ReadyCount",
+								"comparison": 2,
+								"value": "100"
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "set-animation",
+							"objectClass": "PlayerRegistered",
+							"sid": 433970721550875,
+							"parameters": {
+								"animation": "\"Unready\"",
+								"from": "current-frame"
+							}
+						},
+						{
+							"id": "set-boolean-instvar",
+							"objectClass": "PlayerRegistered",
+							"sid": 444587445902084,
+							"parameters": {
+								"instance-variable": "Ready",
+								"value": "false"
+							}
+						},
+						{
+							"callFunction": "EvaluateReadiness",
+							"sid": 668894535678689
+						}
+					],
+					"sid": 122216453293823
+				},
+				{
+					"eventType": "block",
+					"conditions": [],
+					"actions": [],
+					"sid": 125951042391251
+				}
+			]
+		},
+		{
+			"functionName": "EvaluateReadiness",
+			"functionDescription": "",
+			"functionCategory": "",
+			"functionReturnType": "none",
+			"functionCopyPicked": false,
+			"functionIsAsync": false,
+			"functionParameters": [],
+			"eventType": "function-block",
+			"conditions": [],
+			"actions": [],
+			"sid": 161283162045776,
+			"children": [
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "pick-by-evaluate",
+							"objectClass": "System",
+							"sid": 209978944053054,
+							"parameters": {
+								"object": "PlayerRegistered",
+								"expression": "PlayerRegistered.Ready = 1"
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "set-eventvar-value",
+							"objectClass": "System",
+							"sid": 608588596232470,
+							"parameters": {
+								"variable": "PlayersReady",
+								"value": "PlayerRegistered.PickedCount"
+							}
+						}
+					],
+					"sid": 571454429094088
+				}
+			]
+		},
+		{
+			"eventType": "block",
+			"conditions": [
+				{
+					"id": "compare-two-values",
+					"objectClass": "System",
+					"sid": 557942764374446,
+					"parameters": {
+						"first-value": "PlayersReady",
+						"comparison": 0,
+						"second-value": "PlayersRegistered"
+					}
+				},
+				{
+					"id": "compare-boolean-eventvar",
+					"objectClass": "System",
+					"sid": 647469537474769,
+					"parameters": {
+						"variable": "WaitingforReady"
+					}
+				}
+			],
+			"actions": [
+				{
+					"id": "go-to-nextprevious-layout",
+					"objectClass": "System",
+					"sid": 754667070161348,
+					"parameters": {
+						"which": "next"
+					}
+				}
+			],
+			"sid": 889396607284083
+		},
+		{
+			"eventType": "block",
+			"conditions": [],
+			"actions": [],
+			"sid": 946970930973918
+		},
+		{
+			"eventType": "block",
+			"conditions": [],
+			"actions": [],
+			"sid": 729229728709767
 		}
 	],
 	"sid": 270587157235578

@@ -34,9 +34,18 @@
 			"End1",
 			"End2",
 			"Keyboard",
-			"Array"
+			"Array",
+			"PlayerControl"
 		],
-		"subfolders": []
+		"subfolders": [
+			{
+				"items": [
+					"PlayerRegistered"
+				],
+				"subfolders": [],
+				"name": "Setup"
+			}
+		]
 	},
 	"functionsName": "Functions",
 	"autosaveData": null,

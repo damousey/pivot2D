@@ -25,74 +25,234 @@
 			"eventType": "block",
 			"conditions": [
 				{
-					"id": "is-boolean-instance-variable-set",
-					"objectClass": "End1",
-					"sid": 478385879020893,
-					"parameters": {
-						"instance-variable": "Orbiting"
-					}
+					"id": "on-start-of-layout",
+					"objectClass": "System",
+					"sid": 178001636948720
 				}
 			],
 			"actions": [
 				{
-					"id": "set-position",
-					"objectClass": "End1",
-					"sid": 252262892400309,
+					"id": "set-boolean-eventvar",
+					"objectClass": "System",
+					"sid": 243144526761708,
 					"parameters": {
-						"x": "End2.X+cos(Self.OrbitAngle)*64",
-						"y": "End2.Y+sin(Self.OrbitAngle)*64"
-					}
-				},
-				{
-					"id": "set-instvar-value",
-					"objectClass": "End1",
-					"sid": 281990614065672,
-					"parameters": {
-						"instance-variable": "OrbitAngle",
-						"value": "(Self.OrbitAngle+OrbitSpeed*dt*OrbitDirection)%360"
+						"variable": "WaitingforReady",
+						"value": "false"
 					}
 				}
 			],
-			"sid": 488412185102994
+			"sid": 535369137581727,
+			"children": [
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "for",
+							"objectClass": "System",
+							"sid": 630132212259019,
+							"parameters": {
+								"name": "\"i\"",
+								"start-index": "0",
+								"end-index": "Array.Depth"
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "create-object",
+							"objectClass": "System",
+							"sid": 939037951365668,
+							"parameters": {
+								"object-to-create": "PlayerControl",
+								"layer": "0",
+								"x": "0",
+								"y": "0",
+								"create-hierarchy": false,
+								"template-name": "\"\""
+							}
+						},
+						{
+							"id": "set-instvar-value",
+							"objectClass": "PlayerControl",
+							"sid": 291402281683313,
+							"parameters": {
+								"instance-variable": "PlayerID",
+								"value": "loopindex+1"
+							}
+						},
+						{
+							"id": "set-visible",
+							"objectClass": "PlayerControl",
+							"sid": 420627379208901,
+							"parameters": {
+								"visibility": "invisible"
+							}
+						}
+					],
+					"sid": 665353122002816
+				},
+				{
+					"eventType": "block",
+					"conditions": [],
+					"actions": [
+						{
+							"id": "wait-for-previous-actions",
+							"objectClass": "System",
+							"sid": 922513095765802
+						},
+						{
+							"callFunction": "AssignPlayerValues",
+							"sid": 328255201849429
+						}
+					],
+					"sid": 577485426332355
+				}
+			]
 		},
 		{
-			"eventType": "block",
-			"conditions": [
+			"functionName": "AssignPlayerValues",
+			"functionDescription": "",
+			"functionCategory": "",
+			"functionReturnType": "none",
+			"functionCopyPicked": false,
+			"functionIsAsync": false,
+			"functionParameters": [],
+			"eventType": "function-block",
+			"conditions": [],
+			"actions": [],
+			"sid": 731031593386194,
+			"children": [
 				{
-					"id": "else",
-					"objectClass": "System",
-					"sid": 560593919955393
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "for-each",
+							"objectClass": "System",
+							"sid": 652588486858697,
+							"parameters": {
+								"object": "PlayerControl"
+							}
+						},
+						{
+							"id": "trigger-once-while-true",
+							"objectClass": "System",
+							"sid": 459875414341273
+						}
+					],
+					"actions": [
+						{
+							"id": "set-instvar-value",
+							"objectClass": "PlayerControl",
+							"sid": 877355587080972,
+							"parameters": {
+								"instance-variable": "KeyCode",
+								"value": "Array.At(Self.PlayerID-1)"
+							}
+						},
+						{
+							"id": "set-position",
+							"objectClass": "PlayerControl",
+							"sid": 198053496167522,
+							"parameters": {
+								"x": "250*Self.PlayerID",
+								"y": "250"
+							}
+						},
+						{
+							"id": "set-visible",
+							"objectClass": "PlayerControl",
+							"sid": 832209339265880,
+							"parameters": {
+								"visibility": "visible"
+							}
+						}
+					],
+					"sid": 594909852319502
+				}
+			]
+		},
+		{
+			"eventType": "group",
+			"disabled": false,
+			"title": "Game Events",
+			"description": "",
+			"isActiveOnStart": true,
+			"children": [
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "is-boolean-instance-variable-set",
+							"objectClass": "End1",
+							"sid": 652418564787025,
+							"parameters": {
+								"instance-variable": "Orbiting"
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "set-position",
+							"objectClass": "End1",
+							"sid": 428154416785601,
+							"parameters": {
+								"x": "End2.X+cos(Self.OrbitAngle)*64",
+								"y": "End2.Y+sin(Self.OrbitAngle)*64"
+							}
+						},
+						{
+							"id": "set-instvar-value",
+							"objectClass": "End1",
+							"sid": 844586728368163,
+							"parameters": {
+								"instance-variable": "OrbitAngle",
+								"value": "(Self.OrbitAngle+OrbitSpeed*dt*OrbitDirection)%360"
+							}
+						}
+					],
+					"sid": 666333157082748
 				},
 				{
-					"id": "is-boolean-instance-variable-set",
-					"objectClass": "End2",
-					"sid": 498266905192218,
-					"parameters": {
-						"instance-variable": "Orbiting"
-					}
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "else",
+							"objectClass": "System",
+							"sid": 305970582602842
+						},
+						{
+							"id": "is-boolean-instance-variable-set",
+							"objectClass": "End2",
+							"sid": 635237634017796,
+							"parameters": {
+								"instance-variable": "Orbiting"
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "set-position",
+							"objectClass": "End2",
+							"sid": 659248444734023,
+							"parameters": {
+								"x": "End1.X+cos(Self.OrbitAngle)*64",
+								"y": "End1.Y+sin(Self.OrbitAngle)*64"
+							}
+						},
+						{
+							"id": "set-instvar-value",
+							"objectClass": "End2",
+							"sid": 479510863161621,
+							"parameters": {
+								"instance-variable": "OrbitAngle",
+								"value": "(Self.OrbitAngle+OrbitSpeed*dt*OrbitDirection)%360"
+							}
+						}
+					],
+					"sid": 609024221232116
 				}
 			],
-			"actions": [
-				{
-					"id": "set-position",
-					"objectClass": "End2",
-					"sid": 975517208531689,
-					"parameters": {
-						"x": "End1.X+cos(Self.OrbitAngle)*64",
-						"y": "End1.Y+sin(Self.OrbitAngle)*64"
-					}
-				},
-				{
-					"id": "set-instvar-value",
-					"objectClass": "End2",
-					"sid": 526793319470233,
-					"parameters": {
-						"instance-variable": "OrbitAngle",
-						"value": "(Self.OrbitAngle+OrbitSpeed*dt*OrbitDirection)%360"
-					}
-				}
-			],
-			"sid": 241906436455598
+			"sid": 378745857815759
 		}
 	],
 	"sid": 208503246805035
